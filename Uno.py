@@ -14,7 +14,7 @@ name_options = ['Egbert', 'Frodo', 'Victoria', 'Francis Bacon', 'George', 'Maria
                 'Mercury', 'Loki', 'Ares', 'Seth', 'James', 'Rebekah', 'Mr. Cockroach', 'Mr. Potato Head',
                 'Aragorn', 'Sauron', 'Legolas', 'John Doe', 'Roald Dahl', 'Harley Davidson',
                 'Dwayne "The Rock" Johnson', 'Stick', 'Mr. Toad', 'Tony Stark', 'Galloran', 'Gonzo',
-                'Scoobidus Moobidus, the Great Old One', 'Golum', 'Smeagol']
+                'Scoobidus Moobidus, the Great Old One', 'Golum', 'Smeagol', 'Spencer']
 
 def reset_variables():
 
