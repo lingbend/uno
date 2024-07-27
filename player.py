@@ -5,6 +5,12 @@ class Player:
         self.id = id
         self.name = name
 
+    def get_id(self):
+        return self.id
+
+    def get_name(self):
+        return self.name
+
     def get_hand(self):
         return self.hand
     
@@ -24,8 +30,7 @@ class Player:
             return True
         return False
     
-    def draw_card_from_deck(self, deck):
-        card = deck.draw_card()
+    def draw_card(self, card):
         self.hand.append(card)
 
     def get_playable_cards(self, top_discard_card):
@@ -36,6 +41,9 @@ class Player:
             elif card.type == top_discard_card.type:
                 playable.append(card)
         return playable
+    
+    def get_number_of_cards(self):
+        return len(self.hand)
 
 
     # hand
