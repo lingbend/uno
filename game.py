@@ -1,5 +1,5 @@
 import player
-import deck
+
 
 NUMBER_OF_PLAYERS = 4
 INITIAL_NUMBER_OF_CARDS = 7
@@ -25,8 +25,9 @@ class Game:
 
 
     def create_deck(self):
-        self.deck = deck.Deck()
-        self.deck.shuffle_cards()
+        # self.deck = deck.Deck()
+        # self.deck.shuffle_cards()
+        self.deck = []
 
     def reverse(self):
         if self.direction_of_play == 'left':
@@ -71,11 +72,11 @@ class Game:
         
         
 
-    def main():
-        # set up players
-        # set up deck
-        # deal inital cards to players
-        # select a player to go first and esablish an order of turns
-        # Play a player's turn
+    # def main():
+    #     # set up players
+    #     # set up deck
+    #     # deal inital cards to players
+    #     # select a player to go first and esablish an order of turns
+    #     # Play a player's turn
 
         
