@@ -14,20 +14,22 @@ class Deck:
         elif type(discard) != Deck:
             return False
         else:
-            card_list = discard.card_list
-            discard.card_list = []
+            card_list = discard.card_list[:-1]
+            discard.card_list = [discard.card_list.pop()]
+            discard.top_card = discard.card_list[-1]
             for card in card_list:
                 if card.type == 'wild' or card.type == 'draw_4':
                     card.color == 'wild'
-
-        self.card_list = random.shuffle(card_list)
+        random.shuffle(card_list)
+        self.card_list = card_list
+        self.top_card = card_list[-1]
 
     def add_card(self, new_card):
         self.card_list.append(new_card)
         self.top_card = new_card
 
 
-    def initialize_cards():
+    def initialize_cards(self):
         cards = []
         for color in ['red', 'blue', 'green', 'yellow']:
             for type in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
@@ -41,14 +43,11 @@ class Deck:
         return cards
             
 
-    def draw_card(self):
+    def draw_card(self, discard):
         if len(self.card_list) <= 0:
-            pass 
-            #shuffle discard
+            self.shuffle_cards(discard)
         card = self.card_list.pop()
         if len(self.card_list) <= 0:
-                pass
-                #shuffle discard
+                self.shuffle_cards(discard)
         self.top_card = self.card_list[-1]
         return card
-    

@@ -1,9 +1,4 @@
-from deck import Deck
-
-
 class Card:
-
-    ## reverse, draw_2, wild, wild_draw_4, skip, number
 
     def __init__(self, color, type):
         self.color = color
