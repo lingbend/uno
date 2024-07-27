@@ -1,4 +1,5 @@
 import player
+import deck
 
 
 NUMBER_OF_PLAYERS = 4
@@ -8,26 +9,32 @@ INITIAL_NUMBER_OF_CARDS = 7
 class Game:
     def __init__(self) -> None:
         self.players = []
-        self.deck = self.create_deck()
+        self.deck = None
+        self.discard = None
         self.current_turn = 0
         self.direction_of_play = 'right'
         self.action = ''
+        self.create_deck()
+        self.create_discard()
 
     def create_a_player(self, player_name):
         p = player.Player(player_name, len(self.players))
         self.players.append(p)
     
     def deal_inital_cards_to_players(self):
-        for i in range(INITIAL_NUMBER_OF_CARDS):
+        for _ in range(INITIAL_NUMBER_OF_CARDS):
             for player in self.players:
-                card = self.deck.draw_card()
+                card = self.deck.draw_card(self.discard)
                 player.draw_card(card)
 
 
     def create_deck(self):
-        # self.deck = deck.Deck()
-        # self.deck.shuffle_cards()
-        self.deck = []
+        self.deck = deck.Deck()
+        self.deck.shuffle_cards()
+
+    def create_discard(self):
+        self.discard = deck.Deck()
+        self.discard.add_card(self.deck.draw_card(self.discard))
 
     def reverse(self):
         if self.direction_of_play == 'left':
