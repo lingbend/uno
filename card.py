@@ -30,7 +30,7 @@ class Card:
                 relative_path = 'res/grandpa_' + color
         else:
             if type == 'draw_4':
-                relative_path = 'res/wild_pick_four.png'
+                relative_path = 'res/wild_pick_four'
             else:
                 relative_path = random.choice(['res/wild_color_changer', 'res/wild_napoleon'])
         relative_path += '.png'
