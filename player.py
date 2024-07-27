@@ -17,8 +17,8 @@ class Player:
     def end_turn(self):
         self.turn = False
     
-    def play_card(self, card):
-        if card in self.hand:
+    def play_card(self, card, top_discard_card):
+        if card in self.get_playable_cards(top_discard_card):
             card.play_card()
             self.hand.remove(card)
             return True
@@ -27,6 +27,17 @@ class Player:
     def draw_card_from_deck(self, deck):
         card = deck.draw_card()
         self.hand.append(card)
+
+    def get_playable_cards(self, top_discard_card):
+        playable = []
+        for card in self.hand:
+            if card.color == top_discard_card.color:
+                playable.append(card)
+            elif card.type == top_discard_card.type:
+                playable.append(card)
+        return playable
+
+
     # hand
     # is players turn
     # play card
