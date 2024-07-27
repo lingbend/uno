@@ -22,9 +22,6 @@ background = pygame.transform.scale(background,
                                      pygame.display.Info().current_h))
 w.blit(background, (0, 0))
 
-
-
-
 def render():
     top_x = 10
     top_y = 10
@@ -71,7 +68,38 @@ def render():
 
 
 def update():
-    pass
+    cards_on_screen = []
+    cur_player = g.get_current_player()
+    left = 10
+    temp_img = pygame.image.load("res/blue_0.png").convert()
+    temp_rect = temp_img.get_rect()
+    bottom = (pygame.display.Info().current_h - 10) - (temp_rect.size[1] * (len(cur_player.hand) // 11)) - (10 * (len(cur_player.hand) // 11))
+    card_count = 0
+    for card in cur_player.hand:
+        card_image = pygame.image.load(card.resource).convert()
+        card_image_rect = card_image.get_rect()
+        card_image_rect.bottomleft = (left, bottom)
+        left += card_image_rect.size[0] + 10
+        card_count += 1
+        if card_count > 10:
+            card_count = 0 
+            left = 10
+            bottom += (card_image.size[1] * (len(cur_player.hand) // 11)) + (10 * (len(cur_player.hand) // 11))
+        cards_on_screen.append((card, card_image_rect))
+
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN: 
+            print("detect mousedown", event.pos)
+            print(len(cards_on_screen))
+            for card, rect in cards_on_screen:
+                if rect.collidepoint(event.pos): 
+                    print(card.type, card.color)
+                    if g.is_card_playable(card):
+                        g.play_card(card)
+                        g.set_next_players_turn()
+                else: 
+                    pass
+    
 
 
 
@@ -96,6 +124,7 @@ x=False
 active=False
 while True:
     render()
+    update()
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN: 
             if rect.collidepoint(event.pos): 

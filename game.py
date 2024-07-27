@@ -27,6 +27,15 @@ class Game:
                 card = self.deck.draw_card(self.discard)
                 player.draw_card(card)
 
+    def play_card(self, card):
+        t = card.play_card(self.discard)
+        self.get_current_player().play_card(card, self.discard.top_card)
+        if t == 'reverse':
+            self.reverse()
+        elif t == 'draw_2' or t == 'draw_4' or t == 'skip':
+            self.action = t
+        elif t == "wild":
+            card.color = input("Enter card color: ") # TODO
 
     def create_deck(self):
         self.deck = deck.Deck()
@@ -58,23 +67,34 @@ class Game:
                 return player
         return 0
 
-    def play_turn(self):
-        if self.action == "draw 2":
+    def is_card_playable(self, card):
+        if card.type == self.discard.top_card.type:
+            return True
+        if card.color == self.discard.top_card.color:
+            return True
+        if card.type == "wild":
+            return True
+        return False
+
+    def play_forced_turn(self):
+        if self.action == "draw_2":
             for _ in range(2):
-                card = self.deck.draw_card()
+                card = self.deck.draw_card(self.discard)
                 self.get_current_player().draw_card(card)
-        elif self.action == "draw 4":
+        elif self.action == "draw_4":
             for _ in range(4):
-                card = self.deck.draw_card()
+                card = self.deck.draw_card(self.discard)
                 self.get_current_player().draw_card(card)
         elif self.action == "skip":
             self.set_next_players_turn()
             return # End the players turn now.
+        action = ''
         
         # If no cards avalilable to play, draw a card and end the turn
         if len(self.get_current_player().get_playable_cards()) == 0:
-            card = self.deck.draw_card()
+            card = self.deck.draw_card(self.discard)
             self.get_current_player().draw_card(card)
+
 
         
         

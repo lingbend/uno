@@ -25,7 +25,7 @@ class Player:
     
     def play_card(self, card, top_discard_card):
         if card in self.get_playable_cards(top_discard_card):
-            card.play_card()
+            # card.play_card()
             self.hand.remove(card)
             return True
         return False
