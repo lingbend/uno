@@ -8,22 +8,8 @@ g = game.Game()
 g.players.append(player.Player("Steve", 0))
 g.players.append(player.Player("Chris", 1))
 g.players.append(player.Player("John", 2))
-g.players[0].draw_card(1)
-g.players[0].draw_card(2)
-g.players[0].draw_card(1)
-g.players[0].draw_card(2)
-g.players[0].draw_card(1)
-g.players[0].draw_card(2)
-g.players[0].draw_card(1)
-g.players[0].draw_card(2)
-g.players[0].draw_card(1)
-g.players[0].draw_card(2)
-g.players[0].draw_card(1)
-g.players[0].draw_card(2)
-g.players[0].draw_card(1)
-g.players[0].draw_card(2)
-g.players[0].draw_card(1)
-g.players[0].draw_card(2)
+g.deal_inital_cards_to_players()
+
 base_font = pygame.font.Font(None, 32)
 #create the screen
 w = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
@@ -54,13 +40,14 @@ def render():
             top_x += text_rect.size[0] + 10
             w.blit(font, text_rect)
         else:
+            #display current Players cards
             left = 10
             temp_img = pygame.image.load("res/blue_0.png").convert()
             temp_rect = temp_img.get_rect()
             bottom = (pygame.display.Info().current_h - 10) - (temp_rect.size[1] * (len(player.hand) // 11)) - (10 * (len(player.hand) // 11))
             card_count = 0
             for card in player.hand:
-                card_image = pygame.image.load("res/blue_0.png").convert()
+                card_image = pygame.image.load(card.resource).convert()
                 card_image_rect = card_image.get_rect()
                 card_image_rect.bottomleft = (left, bottom)
                 left += card_image_rect.size[0] + 10
@@ -76,13 +63,12 @@ def render():
     deck_rect.topright = (pygame.display.Info().current_w - 10, 10)
     w.blit(deck_img, deck_rect)
     #Draw the discard
-    discard_img = pygame.image.load("res/blue_0.png").convert() # TODO: mak ehtis the top f discard
+    discard_img = pygame.image.load(g.discard.top_card.resource).convert() # TODO: mak ehtis the top f discard
     discard_rect = discard_img.get_rect()
     discard_rect.topright = (pygame.display.Info().current_w - 20 - discard_rect.size[0], 10)
     w.blit(discard_img, discard_rect)
-    # display player card numbers and names
-    # display top discard
-    # display player's hand
+
+
 
 
 
