@@ -5,7 +5,15 @@ pygame.init()
 
 #create the screen
 w = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-w.fill((0,0,255))
+
+
+# Set backgorund to screen
+background = pygame.image.load("res/table/walnutttttt.png").convert()
+background = pygame.transform.scale(background, 
+                                    (pygame.display.Info().current_w, 
+                                     pygame.display.Info().current_h))
+w.blit(background, (0, 0))
+
 rect = pygame.Rect(200, 200, 140, 32) 
 base_font = pygame.font.Font(None, 32) 
 user_text = ''
@@ -19,11 +27,7 @@ color = color_passive
 #title
 pygame.display.set_caption("A Simple Game Uno")
 
-background = pygame.image.load("res/table/walnutttttt.png").convert()
-background = pygame.transform.scale(background, 
-                                    (pygame.display.Info().current_w, 
-                                     pygame.display.Info().current_h))
-w.blit(background, (0, 0))
+
 
 x=False
 active=False
