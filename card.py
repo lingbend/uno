@@ -5,10 +5,9 @@ class Card:
 
     ## reverse, draw_2, wild, wild_draw_4, skip, number
 
-    def __init__(self, color, type, deck, discard, id):
+    def __init__(self, color, type, discard, id):
         self.color = color
         self.type = type
-        self.deck = deckS
         self.discard = discard
         self.id = id
 
