@@ -23,6 +23,8 @@ background = pygame.transform.scale(background,
 w.blit(background, (0, 0))
 
 def render():
+    w.fill((255, 255, 255)) # Clear screen
+    w.blit(background, (0, 0))
     top_x = 10
     top_y = 10
     for player in g.players:
