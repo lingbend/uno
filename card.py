@@ -1,4 +1,4 @@
-
+from deck import Deck
 
 
 class Card:
