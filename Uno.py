@@ -54,6 +54,7 @@ def render():
             top_x += text_rect.size[0] + 10
             w.blit(font, text_rect)
         else:
+            #display current Players cards
             left = 10
             temp_img = pygame.image.load("res/blue_0.png").convert()
             temp_rect = temp_img.get_rect()
@@ -80,9 +81,8 @@ def render():
     discard_rect = discard_img.get_rect()
     discard_rect.topright = (pygame.display.Info().current_w - 20 - discard_rect.size[0], 10)
     w.blit(discard_img, discard_rect)
-    # display player card numbers and names
-    # display top discard
-    # display player's hand
+
+
 
 
 
