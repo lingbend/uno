@@ -11,7 +11,7 @@ class Game:
         self.deck = self.create_deck()
         self.current_turn = 0
         self.direction_of_play = 'right'
-        self.actions = []
+        self.action = ''
 
     def create_a_player(self, player_name):
         p = player.Player(player_name, len(self.players))
@@ -44,15 +44,32 @@ class Game:
             if self.current_turn < 0:
                 self.current_turn = len(self.players) - 1
     
-    def get_current_player(self):
+    def get_current_player(self) -> player.Player:
         for player in self.players:
             if player.get_id() == self.current_turn:
                 return player
         return 0
 
     def play_turn(self):
-        if len(self.actions) == 0:
+        if self.action == "draw 2":
+            for _ in range(2):
+                card = self.deck.draw_card()
+                self.get_current_player().draw_card(card)
+        elif self.action == "draw 4":
+            for _ in range(4):
+                card = self.deck.draw_card()
+                self.get_current_player().draw_card(card)
+        elif self.action == "skip":
+            self.set_next_players_turn()
+            return # End the players turn now.
+        
+        # If no cards avalilable to play, draw a card and end the turn
+        if len(self.get_current_player().get_playable_cards()) == 0:
+            card = self.deck.draw_card()
+            self.get_current_player().draw_card(card)
 
+        
+        
 
     def main():
         # set up players

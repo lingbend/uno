@@ -40,6 +40,8 @@ class Player:
                 playable.append(card)
             elif card.type == top_discard_card.type:
                 playable.append(card)
+            elif card.color == 'wild':
+                playable.append(card)
         return playable
     
     def get_number_of_cards(self):

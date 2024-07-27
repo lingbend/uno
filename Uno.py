@@ -18,6 +18,13 @@ color_passive = pygame.Color('chartreuse4')
 color = color_passive 
 #title
 pygame.display.set_caption("A Simple Game Uno")
+
+background = pygame.image.load("res/table/walnutttttt.png").convert()
+background = pygame.transform.scale(background, 
+                                    (pygame.display.Info().current_w, 
+                                     pygame.display.Info().current_h))
+w.blit(background, (0, 0))
+
 x=False
 active=False
 while True:
