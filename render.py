@@ -92,14 +92,20 @@ def display_player_hand(window, player):
     """Displays a players hand"""
     # get a card's Size
     card_size = get_card_size()
+    # Get row amounts
+    number_of_cards_per_row = int(pygame.display.Info().current_w / card_size[0]) - 1
+    number_of_rows = len(player.hand) / number_of_cards_per_row
+    if number_of_rows > int(number_of_rows):
+        number_of_rows = int(number_of_rows) + 1
     # Set start position to render cards.
     left = MARGIN
-    top = ((pygame.display.Info().current_h - MARGIN - card_size[1]) -  # First row height
-           (card_size[1] * (len(player.hand) // 11)) -  # Multiple rows
-           (MARGIN * (len(player.hand) // 11)))  # Card Margins
+    top = ((pygame.display.Info().current_h) -
+           (card_size[1] * number_of_rows) -  # Multiple rows
+           (MARGIN * number_of_rows))  # Card Margins
 
     # loop through all cards and display them.
     card_count_in_row = 0
+    remaining_rows = number_of_rows
     clickable_cards = []
     for card in player.hand:
         clickable_cards.append(display_card(window, card, (left, top), card_size))
@@ -107,10 +113,13 @@ def display_player_hand(window, player):
         left += card_size[0] + MARGIN
         card_count_in_row += 1
         # If end of row reached: then reset cord position to beginning of new row.
-        if card_count_in_row > 10:
+        if card_count_in_row >= number_of_cards_per_row:
             card_count_in_row = 0 
+            remaining_rows -= 1
             left = MARGIN
-            top += (card_size[1] * (len(player.hand) // 11)) + (MARGIN * (len(player.hand) // 11))
+            top = ((pygame.display.Info().current_h) -
+                    (card_size[1] * remaining_rows) -
+                    (MARGIN * remaining_rows))
     return clickable_cards
 
 def get_card_size():

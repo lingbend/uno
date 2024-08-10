@@ -43,16 +43,17 @@ def update(game, event, clickable_cards, deck_rect, red_rect, yellow_rect, green
             game.set_next_players_turn()
     # Handle Normal Play
     else:
+        # Draw from Deck if chosen
+        if deck_rect.collidepoint(event.pos):
+            drawn_card = game.deck.draw_card(game.discard)
+            current_player.draw_card(drawn_card)
+            game.set_next_players_turn()
+            return  # stop update function after drawing a card.
+        # Play a card
         for card, rect in clickable_cards:
             if rect.collidepoint(event.pos): 
                 if game.is_card_playable(card):
                     game.play_card(card)
                     if card.color != "wild":
                         game.set_next_players_turn()
-            else: 
-                pass
-        # deck draw feature
-        if deck_rect.collidepoint(event.pos):
-            drawn_card = game.deck.draw_card(game.discard)
-            current_player.draw_card(drawn_card)
-            game.set_next_players_turn()
+        
