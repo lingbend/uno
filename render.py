@@ -36,8 +36,13 @@ def render(window, game):
     discard_rect = discard_img.get_rect()
     discard_rect.topright = (pygame.display.Info().current_w - 20 - discard_rect.size[0], 10)
     window.blit(discard_img, discard_rect)
+    # Display color_picker
+    red_rect, yellow_rect, green_rect, blue_rect = None, None, None, None
+    # Display color pickers if the player needs to pick the color
+    if game.action == "pick_color":
+        red_rect, yellow_rect, green_rect, blue_rect = display_color_pickers(window)
     # return all the clickable objects on the screen
-    return clickable_cards, deck_rect
+    return clickable_cards, deck_rect, red_rect, yellow_rect, green_rect, blue_rect
 
 
 def display_player_stats(window, player, top_left_coords):
@@ -110,3 +115,31 @@ def get_card_size():
     """gets the card display size"""
     temp_img = pygame.image.load("res/blue_0.png").convert()
     return temp_img.get_rect().size
+
+def display_color_pickers(window):
+    """displays the 4 color choices"""
+    # Red
+    red = pygame.image.load("res/RedButton.png").convert()
+    red_rect = red.get_rect()
+    red_rect.center = ((pygame.display.Info().current_w // 2) - red_rect.size[0],
+                       (pygame.display.Info().current_h // 2) - red_rect.size[1])
+    window.blit(red, red_rect)
+    # Yellow 
+    yellow = pygame.image.load("res/YellowButton.png").convert()
+    yellow_rect = yellow.get_rect()
+    yellow_rect.center = ((pygame.display.Info().current_w // 2) + yellow_rect.size[0],
+                          (pygame.display.Info().current_h // 2) - yellow_rect.size[1])
+    window.blit(yellow, yellow_rect)
+    # Green
+    green = pygame.image.load("res/GreenButton.png").convert()
+    green_rect = green.get_rect()
+    green_rect.center = ((pygame.display.Info().current_w // 2) - green_rect.size[0],
+                         (pygame.display.Info().current_h // 2) + green_rect.size[1])
+    window.blit(green, green_rect)
+    # Blue
+    blue = pygame.image.load("res/BlueButton.png").convert()
+    blue_rect = blue.get_rect()
+    blue_rect.center = ((pygame.display.Info().current_w // 2) + blue_rect.size[0],
+                        (pygame.display.Info().current_h // 2) + blue_rect.size[1])
+    window.blit(blue, blue_rect)
+    return red_rect, yellow_rect, green_rect, blue_rect

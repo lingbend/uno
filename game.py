@@ -28,14 +28,14 @@ class Game:
                 player.draw_card(card)
 
     def play_card(self, card):
-        t = card.play_card(self.discard)
+        number, color = card.play_card(self.discard)
         self.get_current_player().play_card(card, self.discard.top_card)
-        if t == 'reverse':
+        if number == 'reverse':
             self.reverse()
-        elif t == 'draw_2' or t == 'draw_4' or t == 'skip':
-            self.action = t
-        elif t == "wild":
-            card.color = input("Enter card color: ") # TODO
+        elif number == 'draw_2' or number == 'skip':
+            self.action = number
+        elif color == "wild":
+            self.action = "pick_color"
 
     def create_deck(self):
         self.deck = deck.Deck()

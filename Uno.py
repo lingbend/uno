@@ -22,12 +22,12 @@ pygame.display.set_caption("A Simple Game of Uno")
 
 while True:
     # Render the cards
-    clickable_cards, deck_rect = render.render(w, g)
+    clickable_cards, deck_rect, red_rect, yellow_rect, green_rect, blue_rect = render.render(w, g)
 
     # Get Input (with update inside)
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
-            update.update(g, event, clickable_cards, deck_rect)
+            update.update(g, event, clickable_cards, deck_rect, red_rect, yellow_rect, green_rect, blue_rect)
         # Ways to quit the game
         if event.type == pygame.QUIT:
             pygame.quit()

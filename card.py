@@ -8,17 +8,8 @@ class Card:
         self.resource = self.get_resource(color, type)
 
     def play_card(self, discard): # is used by play_card function for player
-        
-        if discard.top_card.color == self.color:
-            discard.add_card(self) # calls add card function on discard deck object
-            return self.type
-
-        elif discard.top_card.type == self.type:
             discard.add_card(self)
-            return self.type
-
-        else:
-            return False
+            return self.type, self.color
         
     def get_resource(self, color, type):
         relative_path = 'res/'
