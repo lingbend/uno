@@ -32,10 +32,10 @@ class Deck:
     def initialize_cards(self):
         cards = []
         for color in ['red', 'blue', 'green', 'yellow']:
-            for type in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
+            for type in ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'reverse', 'draw_2', 'skip']:
                 cards.append(Card(color, type))
                 cards.append(Card(color, type))
-            for type in ['reverse', 'draw_2', 'skip', '0']:
+            for type in ['0']:
                 cards.append(Card(color, type))
         for i in range(4):
             cards.append(Card('wild', 'wild'))

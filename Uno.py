@@ -13,7 +13,7 @@ g.players.append(player.Player("Steve", 0))
 g.players.append(player.Player("Chris", 1))
 g.players.append(player.Player("John", 2))
 g.deal_inital_cards_to_players()
-
+print(len(g.deck.card_list))
 # create the screen
 w = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 # set title
