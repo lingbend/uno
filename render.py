@@ -37,11 +37,25 @@ def render(window, game):
     discard_rect = discard_img.get_rect()
     discard_rect.topright = (pygame.display.Info().current_w - 20 - discard_rect.size[0], 10)
     window.blit(discard_img, discard_rect)
+    if game.discard.top_card.type in ["draw_4", "wild"] and game.discard.top_card.color != "wild":
+        if game.discard.top_card.color == "red":
+            resource = pygame.image.load("res/RedButton.png").convert()
+        elif game.discard.top_card.color == "yellow":
+            resource = pygame.image.load("res/YellowButton.png").convert()
+        elif game.discard.top_card.color == "blue":
+            resource = pygame.image.load("res/BlueButton.png").convert()
+        elif game.discard.top_card.color == "green":
+            resource = pygame.image.load("res/GreenButton.png").convert()
+        res_rect = resource.get_rect()
+        res_rect.center = discard_rect.center
+        window.blit(resource, res_rect)
     # Display color_picker
     red_rect, yellow_rect, green_rect, blue_rect, confirm = None, None, None, None, None
     # Display color pickers if the player needs to pick the color
     if game.action == "pick_color":
         red_rect, yellow_rect, green_rect, blue_rect = display_color_pickers(window)
+    elif game.action == "win":
+        display_win(window, game)
     elif game.action != "":
         confirm = display_confirmation(window, game.action)
     # Tell player to play a card if necessary
@@ -194,3 +208,15 @@ def display_confirmation(window, action):
                         (pygame.display.Info().current_h // 2 )- confirm_rect.size[1] - MARGIN)
     window.blit(font, text_rect)
     return confirm_rect
+
+def display_win(window, game):
+    current_player = game.get_current_player()
+    text = f"{current_player.name} wins!!"
+    font = pygame.font.Font(None, 80)
+    font = font.render(text, True, (255, 255, 255))
+    text_rect = font.get_rect()
+    text_rect.center = ((pygame.display.Info().current_w // 2),
+                        (pygame.display.Info().current_h // 2 ))
+    window.blit(font, text_rect)
+
+

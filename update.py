@@ -60,6 +60,12 @@ def update(game, event, clickable_cards, deck_rect, red_rect, yellow_rect, green
                 if game.is_card_playable(card):
                     game.game_state = ''
                     game.play_card(card)
-                    if card.color != "wild":
+                    check_win(game)
+                    if card.color != "wild" and game.action != "win":
                         game.set_next_players_turn()
         
+
+def check_win(game):
+    current_player = game.get_current_player()
+    if len(current_player.hand) == 0:
+        game.action = "win"
