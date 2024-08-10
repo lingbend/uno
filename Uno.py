@@ -71,6 +71,7 @@ w.blit(background, (0, 0))
 
 
 def update():
+    # initializing variables and objects
     cards_on_screen = []
     cur_player = g.get_current_player()
     left = 10
@@ -78,6 +79,9 @@ def update():
     temp_rect = temp_img.get_rect()
     bottom = (pygame.display.Info().current_h - 10) - (temp_rect.size[1] * (len(cur_player.hand) // 11)) - (10 * (len(cur_player.hand) // 11))
     card_count = 0
+    deck_rect = temp_img.get_rect()
+    deck_rect.topright = (pygame.display.Info().current_w - 10, 10)
+    # make a list of tuples of cards in current player's hand and their positions
     for card in cur_player.hand:
         card_image = pygame.image.load(card.resource).convert()
         card_image_rect = card_image.get_rect()
@@ -89,7 +93,7 @@ def update():
             left = 10
             bottom += (card_image.size[1] * (len(cur_player.hand) // 11)) + (10 * (len(cur_player.hand) // 11))
         cards_on_screen.append((card, card_image_rect))
-
+    # if a mouse click is in the same position as a card on screen, play the card
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN: 
             print("detect mousedown", event.pos)
@@ -102,10 +106,16 @@ def update():
                         g.set_next_players_turn()
                 else: 
                     pass
+            # deck draw feature
+            if deck_rect.collidepoint(event.pos):
+                pass
+                drawn_card = g.deck.draw_card(g.discard)
+                cur_player.draw_card(drawn_card)
+                g.set_next_players_turn()
     
 
 
-
+    deck_rect.topright = (pygame.display.Info().current_w - 10, 10)
 
 
 
@@ -119,7 +129,7 @@ color_active = pygame.Color('lightskyblue3')
 color_passive = pygame.Color('chartreuse4') 
 color = color_passive 
 #title
-pygame.display.set_caption("A Simple Game Uno")
+pygame.display.set_caption("A Simple Game of Uno")
 
 
 
