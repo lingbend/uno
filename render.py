@@ -1,5 +1,7 @@
 import pygame
 
+MARGIN = 10
+
 def render(window, game):
     # Get background resource
     background = pygame.image.load("res/table/wooden_table.png").convert()
@@ -10,37 +12,25 @@ def render(window, game):
     window.fill((255, 255, 255))
     window.blit(background, (0, 0))
 
-    top_x = 10
-    top_y = 10
-    # Display player stats
+    top_x = MARGIN
+    top_y = MARGIN
+    
     for player in game.players:
+        # Display all player stats
         offset = display_player_stats(window, player, (top_x, top_y))
-        top_x += offset[0] + 10
+        top_x += offset[0] + MARGIN
+        # display Current player's hand
         if player.get_id() == game.current_turn:
-            #display current Players cards
-            left = 10
-            temp_img = pygame.image.load("res/blue_0.png").convert()
-            temp_rect = temp_img.get_rect()
-            bottom = (pygame.display.Info().current_h - 10) - (temp_rect.size[1] * (len(player.hand) // 11)) - (10 * (len(player.hand) // 11))
-            card_count = 0
-            for card in player.hand:
-                card_image = pygame.image.load(card.resource).convert()
-                card_image_rect = card_image.get_rect()
-                card_image_rect.bottomleft = (left, bottom)
-                left += card_image_rect.size[0] + 10
-                card_count += 1
-                if card_count > 10:
-                    card_count = 0 
-                    left = 10
-                    bottom += (temp_rect.size[1] * (len(player.hand) // 11)) + (10 * (len(player.hand) // 11))
-                window.blit(card_image, card_image_rect)
+            # Diplay Hand: 
+            display_player_hand(window, player)
+
     # draw the deck
     deck_img = pygame.image.load("res/card_back.png").convert()
-    deck_rect = temp_img.get_rect()
+    deck_rect = deck_img.get_rect()
     deck_rect.topright = (pygame.display.Info().current_w - 10, 10)
     window.blit(deck_img, deck_rect)
     #Draw the discard
-    discard_img = pygame.image.load(game.discard.top_card.resource).convert() # TODO: mak ehtis the top f discard
+    discard_img = pygame.image.load(game.discard.top_card.resource).convert() # TODO: make this the top discard
     discard_rect = discard_img.get_rect()
     discard_rect.topright = (pygame.display.Info().current_w - 20 - discard_rect.size[0], 10)
     window.blit(discard_img, discard_rect)
@@ -62,3 +52,44 @@ def display_player_stats(window, player, top_left_coords):
     # render the font object
     window.blit(font, text_rect)
     return text_rect.size
+
+def display_card(window, card, top_left_coords, card_size):
+    """displays a card on the screen"""
+    # get card image resource
+    card_image = pygame.image.load(card.resource).convert()
+    # Load the rect object
+    card_image_rect = card_image.get_rect()
+    # Set the location
+    card_image_rect.topleft = top_left_coords
+    # set the size of the card
+    card_image_rect.size = card_size
+    # render the card
+    window.blit(card_image, card_image_rect)
+
+def display_player_hand(window, player):
+    """Displays a players hand"""
+    # get a card's Size
+    card_size = get_card_size()
+    # Set start position to render cards.
+    left = MARGIN
+    top = ((pygame.display.Info().current_h - MARGIN - card_size[1]) -  # First row height
+            (card_size[1] * (len(player.hand) // 11)) -  # Multiple rows
+            (MARGIN * (len(player.hand) // 11)))  # Card Margins
+
+    # loop through all cards and display them.
+    card_count_in_row = 0
+    for card in player.hand:
+        display_card(window, card, (left, top), card_size)
+        # reset x position to newcard position
+        left += card_size[0] + MARGIN
+        card_count_in_row += 1
+        # If end of row reached: then reset cord position to beginning of new row.
+        if card_count_in_row > 10:
+            card_count_in_row = 0 
+            left = MARGIN
+            top += (card_size[1] * (len(player.hand) // 11)) + (MARGIN * (len(player.hand) // 11))
+
+def get_card_size():
+    """gets the card display size"""
+    temp_img = pygame.image.load("res/blue_0.png").convert()
+    return temp_img.get_rect().size
