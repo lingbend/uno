@@ -34,7 +34,7 @@ while True:
     clickable_cards, deck_rect = render.render(w, g)
     # Input (with update inside)
     for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN: 
+        if event.type == pygame.MOUSEBUTTONDOWN:
             update.update(g, event, clickable_cards, deck_rect)
         #ways to quit the game
         if event.type == pygame.QUIT:

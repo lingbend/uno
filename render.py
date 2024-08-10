@@ -14,13 +14,13 @@ def render(window, game):
 
     top_x = MARGIN
     top_y = MARGIN
-    
+
+    clickable_cards = []
     for player in game.players:
         # Display all player stats
         offset = display_player_stats(window, player, (top_x, top_y))
         top_x += offset[0] + MARGIN
         # display Current player's hand
-        clickable_cards = []
         if player.get_id() == game.current_turn:
             # Diplay Hand: 
             clickable_cards = display_player_hand(window, player)
