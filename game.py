@@ -72,7 +72,9 @@ class Game:
             return True
         if card.color == self.discard.top_card.color:
             return True
-        if card.type == "wild":
+        if card.color == "wild":
+            return True
+        if card.color == "draw_4":
             return True
         return False
 
