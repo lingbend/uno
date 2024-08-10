@@ -41,6 +41,8 @@ def render(window, game):
     # Display color pickers if the player needs to pick the color
     if game.action == "pick_color":
         red_rect, yellow_rect, green_rect, blue_rect = display_color_pickers(window)
+    elif game.action == "win":
+        display_win(window, game)
     elif game.action != "":
         confirm = display_confirmation(window, game.action)
     # return all the clickable objects on the screen
@@ -180,3 +182,15 @@ def display_confirmation(window, action):
                         (pygame.display.Info().current_h // 2 )- confirm_rect.size[1] - MARGIN)
     window.blit(font, text_rect)
     return confirm_rect
+
+def display_win(window, game):
+    current_player = game.get_current_player()
+    text = f"{current_player.name} wins!!"
+    font = pygame.font.Font(None, 80)
+    font = font.render(text, True, (255, 255, 255))
+    text_rect = font.get_rect()
+    text_rect.center = ((pygame.display.Info().current_w // 2),
+                        (pygame.display.Info().current_h // 2 ))
+    window.blit(font, text_rect)
+
+
