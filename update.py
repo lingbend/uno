@@ -2,6 +2,7 @@
 def update(game, event, clickable_cards, deck_rect, red_rect, yellow_rect, green_rect, blue_rect, confirm=None):
     """Update loop. will update the game according to what needs to occur. The event should be
     a mousedown event"""
+    current_player = game.get_current_player()
     # If a player is to pick a color
     if game.action == "pick_color":
         # Set up color pickers
@@ -19,9 +20,29 @@ def update(game, event, clickable_cards, deck_rect, red_rect, yellow_rect, green
                 else:
                     game.action = ""
                 game.set_next_players_turn()
+    # Handle Skips
+    elif game.action == "skip":
+        if confirm.collidepoint(event.pos):
+            game.action = ""
+            game.set_next_players_turn()
+    # Handle Draw 2s
+    elif game.action == "draw_2":
+        if confirm.collidepoint(event.pos):
+            for _ in range(2):
+                drawn_card = game.deck.draw_card(game.discard)
+                current_player.draw_card(drawn_card)
+            game.action = ""
+            game.set_next_players_turn()
+    # Handle Draw 4s
+    elif game.action == "draw_4":
+        if confirm.collidepoint(event.pos):
+            for _ in range(4):
+                drawn_card = game.deck.draw_card(game.discard)
+                current_player.draw_card(drawn_card)
+            game.action = ""
+            game.set_next_players_turn()
+    # Handle Normal Play
     else:
-        current_player = game.get_current_player()
-
         for card, rect in clickable_cards:
             if rect.collidepoint(event.pos): 
                 if game.is_card_playable(card):

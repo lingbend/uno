@@ -37,12 +37,14 @@ def render(window, game):
     discard_rect.topright = (pygame.display.Info().current_w - 20 - discard_rect.size[0], 10)
     window.blit(discard_img, discard_rect)
     # Display color_picker
-    red_rect, yellow_rect, green_rect, blue_rect = None, None, None, None
+    red_rect, yellow_rect, green_rect, blue_rect, confirm = None, None, None, None, None
     # Display color pickers if the player needs to pick the color
     if game.action == "pick_color":
         red_rect, yellow_rect, green_rect, blue_rect = display_color_pickers(window)
+    elif game.action != "":
+        confirm = display_confirmation(window, game.action)
     # return all the clickable objects on the screen
-    return clickable_cards, deck_rect, red_rect, yellow_rect, green_rect, blue_rect
+    return clickable_cards, deck_rect, red_rect, yellow_rect, green_rect, blue_rect, confirm
 
 
 def display_player_stats(window, player, top_left_coords):
@@ -143,3 +145,29 @@ def display_color_pickers(window):
                         (pygame.display.Info().current_h // 2) + blue_rect.size[1])
     window.blit(blue, blue_rect)
     return red_rect, yellow_rect, green_rect, blue_rect
+
+def display_confirmation(window, action):
+    """displayes the action and a confrimation button"""
+    # confirmation button
+    confirm = pygame.image.load("res/ConfirmButton.png").convert()
+    confirm_rect = confirm.get_rect()
+    confirm_rect.center = ((pygame.display.Info().current_w // 2),
+                           (pygame.display.Info().current_h // 2))
+    window.blit(confirm, confirm_rect)
+
+    # Message
+    if action == "skip":
+        text = "Skipped!!"
+    elif action == "draw_2":
+        text = "Draw 2 Cards!!"
+    elif action == "draw_4":
+        text = "Draw 4 Cards!!"
+    else:
+        text = action
+    font = pygame.font.Font(None, 32)
+    font = font.render(text, True, (255, 255, 255))
+    text_rect = font.get_rect()
+    text_rect.center = ((pygame.display.Info().current_w // 2),
+                        (pygame.display.Info().current_h // 2 )- confirm_rect.size[1] - MARGIN)
+    window.blit(font, text_rect)
+    return confirm_rect
