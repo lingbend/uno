@@ -20,9 +20,10 @@ def render(window, game):
         offset = display_player_stats(window, player, (top_x, top_y))
         top_x += offset[0] + MARGIN
         # display Current player's hand
+        clickable_cards = []
         if player.get_id() == game.current_turn:
             # Diplay Hand: 
-            display_player_hand(window, player)
+            clickable_cards = display_player_hand(window, player)
 
     # draw the deck
     deck_img = pygame.image.load("res/card_back.png").convert()
@@ -34,6 +35,8 @@ def render(window, game):
     discard_rect = discard_img.get_rect()
     discard_rect.topright = (pygame.display.Info().current_w - 20 - discard_rect.size[0], 10)
     window.blit(discard_img, discard_rect)
+    # return all the clickable objects on the screen
+    return clickable_cards, deck_rect
 
 
 def display_player_stats(window, player, top_left_coords):
@@ -65,6 +68,7 @@ def display_card(window, card, top_left_coords, card_size):
     card_image_rect.size = card_size
     # render the card
     window.blit(card_image, card_image_rect)
+    return card, card_image_rect
 
 def display_player_hand(window, player):
     """Displays a players hand"""
@@ -73,13 +77,14 @@ def display_player_hand(window, player):
     # Set start position to render cards.
     left = MARGIN
     top = ((pygame.display.Info().current_h - MARGIN - card_size[1]) -  # First row height
-            (card_size[1] * (len(player.hand) // 11)) -  # Multiple rows
-            (MARGIN * (len(player.hand) // 11)))  # Card Margins
+           (card_size[1] * (len(player.hand) // 11)) -  # Multiple rows
+           (MARGIN * (len(player.hand) // 11)))  # Card Margins
 
     # loop through all cards and display them.
     card_count_in_row = 0
+    clickable_cards = []
     for card in player.hand:
-        display_card(window, card, (left, top), card_size)
+        clickable_cards.append(display_card(window, card, (left, top), card_size))
         # reset x position to newcard position
         left += card_size[0] + MARGIN
         card_count_in_row += 1
@@ -88,6 +93,7 @@ def display_player_hand(window, player):
             card_count_in_row = 0 
             left = MARGIN
             top += (card_size[1] * (len(player.hand) // 11)) + (MARGIN * (len(player.hand) // 11))
+    return clickable_cards
 
 def get_card_size():
     """gets the card display size"""
