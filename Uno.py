@@ -129,7 +129,7 @@ color_active = pygame.Color('lightskyblue3')
 color_passive = pygame.Color('chartreuse4') 
 color = color_passive 
 #title
-pygame.display.set_caption("A Simple Game Uno")
+pygame.display.set_caption("A Simple Game of Uno")
 
 
 
