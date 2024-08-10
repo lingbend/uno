@@ -41,6 +41,8 @@ def update(game, event, clickable_cards, deck_rect, red_rect, yellow_rect, green
                 current_player.draw_card(drawn_card)
             game.action = ""
             game.set_next_players_turn()
+    if game.action == "win":
+        return
     # Handle Normal Play
     else:
         # Draw from Deck if chosen
