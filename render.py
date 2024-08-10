@@ -23,6 +23,7 @@ def render(window, game):
         if player.get_id() == game.current_turn:
             # Diplay Hand: 
             display_player_hand(window, player)
+            display_player_name(window, player)
 
     # draw the deck
     deck_img = pygame.image.load("res/card_back.png").convert()
@@ -65,6 +66,16 @@ def display_card(window, card, top_left_coords, card_size):
     card_image_rect.size = card_size
     # render the card
     window.blit(card_image, card_image_rect)
+
+def display_player_name(window, player):
+    text = f"{player.name}'s turn"
+    font = pygame.font.Font(None, 80)
+    font = font.render(text, True, (255, 255, 255))
+    text_rect = font.get_rect()
+    text_rect.center = ((pygame.display.Info().current_w // 2),
+                        (pygame.display.Info().current_h // 6.5))
+    window.blit(font, text_rect)
+
 
 def display_player_hand(window, player):
     """Displays a players hand"""
