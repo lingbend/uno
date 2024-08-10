@@ -16,6 +16,7 @@ class Game:
         self.action = ''
         self.create_deck()
         self.create_discard()
+        self.game_state = ''
 
     def create_a_player(self, player_name):
         p = player.Player(player_name, len(self.players))

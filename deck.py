@@ -13,16 +13,21 @@ class Deck:
             card_list = self.initialize_cards()
         elif type(discard) != Deck:
             return False
+        elif len(discard.card_list) <= 1:
+            print('failed to shuffle')
+            print(len(discard.card_list))
+            return False
         else:
             card_list = discard.card_list[:-1]
             discard.card_list = [discard.card_list.pop()]
-            discard.top_card = discard.card_list[-1]
+            discard.top_card = discard.card_list[0]
             for card in card_list:
                 if card.type == 'wild' or card.type == 'draw_4':
                     card.color == 'wild'
         random.shuffle(card_list)
-        self.card_list = card_list
+        self.card_list += card_list
         self.top_card = card_list[-1]
+        return True
 
     def add_card(self, new_card):
         self.card_list.append(new_card)
@@ -44,10 +49,9 @@ class Deck:
             
 
     def draw_card(self, discard):
-        if len(self.card_list) <= 0:
-            self.shuffle_cards(discard)
+        if len(self.card_list) <= 1:
+            if not self.shuffle_cards(discard):
+                return False
         card = self.card_list.pop()
-        if len(self.card_list) <= 0:
-                self.shuffle_cards(discard)
         self.top_card = self.card_list[-1]
         return card

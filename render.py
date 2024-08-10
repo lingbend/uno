@@ -11,6 +11,7 @@ def render(window, game):
     # Start with a Clear screen
     window.fill((255, 255, 255))
     window.blit(background, (0, 0))
+    
 
     top_x = MARGIN
     top_y = MARGIN
@@ -43,8 +44,21 @@ def render(window, game):
         red_rect, yellow_rect, green_rect, blue_rect = display_color_pickers(window)
     elif game.action != "":
         confirm = display_confirmation(window, game.action)
+    # Tell player to play a card if necessary
+    if game.game_state == 'play':
+        draw_card_message(window)
     # return all the clickable objects on the screen
     return clickable_cards, deck_rect, red_rect, yellow_rect, green_rect, blue_rect, confirm
+
+
+def draw_card_message(window):
+    text = 'Play a card, you nitwit!'
+    font = pygame.font.Font(None, 64)
+    font = font.render(text, True, (0, 0, 0))
+    text_rect = font.get_rect()
+    text_rect.center = ((pygame.display.Info().current_w // 2),
+                        (pygame.display.Info().current_h // 3))
+    window.blit(font, text_rect)
 
 
 def display_player_stats(window, player, top_left_coords):
