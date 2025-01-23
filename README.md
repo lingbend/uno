@@ -1,6 +1,9 @@
 # uno
 Simple Game of Uno. A game jam style game made using pygame.
 
+## Instructions
+Run Uno.py to start. Press "esc" key to quit.
+
 ## Authors & Main Contributions
 
 ### lingbend
